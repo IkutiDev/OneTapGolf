@@ -4549,7 +4549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006768655}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.92, y: -0.11, z: 0}
+  m_LocalPosition: {x: -9.92, y: -0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 215551578}
@@ -5060,6 +5060,43 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616469827, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e, type: 3}
+      propertyPath: endPoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616469827, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e, type: 3}
+      propertyPath: middlePoint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616469827, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e, type: 3}
+      propertyPath: trajectoryDot
+      value: 
+      objectReference: {fileID: 4885876661245954810, guid: 3305e61cbf85b5740a79f62dbfe432e9,
+        type: 3}
+    - target: {fileID: 1616469827, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e, type: 3}
+      propertyPath: projectilePowerIncreaseIncrement
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852216150401089815, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852216150401089815, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852216150401089815, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852216150401089815, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00ff4a8a268b8cd4aa71b477b85f3b4e, type: 3}
