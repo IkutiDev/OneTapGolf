@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Parabola : MonoBehaviour
+public class BallFlightCalculation : MonoBehaviour
 {
     private float parabolaHeight=0.3f;
     private float parabolaWidth = 0.9f;
@@ -53,14 +53,14 @@ public class Parabola : MonoBehaviour
                 finalPosition = trajectoryDots[trajectoryDots.Length-1].transform.position.x;
             }
 
-            /*if (transform.position.x < finalPosition)
+            if (transform.position.x < finalPosition)
             {
                 CalculateFlight();
             }
             else
             {
                 started = false;
-            }*/
+            }
         }
     }
 
@@ -73,11 +73,16 @@ public class Parabola : MonoBehaviour
     {
         for (int i = 0; i < trajectoryDots.Length; i++)
         {
-            var a = parabolaHeight / Mathf.Pow((parabolaWidth / 2), 2);
-            var b = parabolaHeight;
-            var c = parabolaWidth / 2;
-            var y = -(a*(Mathf.Pow((parabolaWidth * ((i + 1) / 10f)-c),2)))+b;
+            var y = CalculateParabola(i);
             trajectoryDots[i].transform.localPosition = new Vector2(parabolaWidth*((i+1)/10f), y);
         }
+    }
+
+    private float CalculateParabola(float x)
+    {
+        var a = parabolaHeight / Mathf.Pow((parabolaWidth / 2), 2);
+        var b = parabolaHeight;
+        var c = parabolaWidth / 2;
+        return -(a * (Mathf.Pow((parabolaWidth * ((x + 1) / 10f) - c), 2))) + b;
     }
 }
