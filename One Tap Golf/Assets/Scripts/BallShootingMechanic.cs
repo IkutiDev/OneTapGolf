@@ -9,7 +9,8 @@ public class BallShootingMechanic : MonoBehaviour
     [SerializeField] private GameObject trajectoryDot;
     private float powerOfProjectile;
     [SerializeField]private float projectilePowerIncreaseIncrement;
-
+    private bool launching;
+    private bool launched;
     private void Start()
     {
         powerOfProjectile = 0f;
@@ -18,21 +19,37 @@ public class BallShootingMechanic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetMouseButton(0))
+        if (!launched)
         {
-            powerOfProjectile += projectilePowerIncreaseIncrement;
-            ShowProjectileTrajectory();
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            ShootProjectile();
+            if (Input.GetMouseButton(0))
+            {
+                launching = true;
+                powerOfProjectile += projectilePowerIncreaseIncrement;
+                ShowProjectileTrajectory();
+            }
+            else if (launching)
+            {
+                
+                launching = false;
+                ShootProjectile();
+            }
         }
     }
 
     private void ShootProjectile()
     {
         Debug.Log("Kapow!");
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(1,1)*powerOfProjectile);
+        launched = true;
         powerOfProjectile = 0f;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (launched)
+        {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+        }
     }
 
     private void ShowProjectileTrajectory()
