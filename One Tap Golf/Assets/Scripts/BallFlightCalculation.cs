@@ -13,15 +13,18 @@ public class BallFlightCalculation : MonoBehaviour
 
     private float finalPosition;
 
-    private float originalPosition;
-
     private bool started;
 
     private bool flying;
 
+    private bool fallen;
+
+    private Vector2 startPosition;
+
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -44,32 +47,29 @@ public class BallFlightCalculation : MonoBehaviour
         }
         else if (started)
         {
-            if (!flying)
+            if (!fallen)
             {
-                
-                foreach (var dot in trajectoryDots)
+                if (!flying)
                 {
-                    dot.SetActive(false);
+
+                    foreach (var dot in trajectoryDots)
+                    {
+                        dot.SetActive(false);
+                    }
+
+                    flying = true;
+
+                    finalPosition = trajectoryDots[trajectoryDots.Length - 1].transform.position.x;
                 }
-                flying = true;
 
-                finalPosition = trajectoryDots[trajectoryDots.Length-1].transform.position.x;
-                originalPosition = transform.position.y;
-            }
-
-            if (transform.position.x < finalPosition)
-            {
-                CalculateFlight();
-            }
-            /*else if (transform.position.y > originalPosition)
-            {
-                CalculateFlight();
-            }*/
-            else
-            {
-                //GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
-                //transform.position = new Vector2(finalPosition, transform.position.y);
-                started = false;
+                if (transform.position.x < finalPosition)
+                {
+                    CalculateFlight();
+                }
+                else
+                {
+                    fallen = true;
+                }
             }
         }
     }
@@ -96,5 +96,17 @@ public class BallFlightCalculation : MonoBehaviour
         var b = parabolaHeight;
         var c = parabolaWidth / 2;
         return -(a * Mathf.Pow((x - c), 2)) + b;
+    }
+
+    public void ResetBall()
+    {
+        transform.position = startPosition;
+        flying = false;
+        started = false;
+        fallen = false;
+        gameObject.layer = 0;
+        parabolaHeight = 0.3f;
+        parabolaWidth = 0.9f;
+        parabolaDistanceIncreaseIncrement += 0.01f;
     }
 }
