@@ -13,17 +13,19 @@ public class BallFlightCalculation : MonoBehaviour
 
     private float finalPosition;
 
+    private float originalPosition;
+
     private bool started;
 
     private bool flying;
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.A) && !flying)
         {
@@ -50,15 +52,23 @@ public class BallFlightCalculation : MonoBehaviour
                     dot.SetActive(false);
                 }
                 flying = true;
+
                 finalPosition = trajectoryDots[trajectoryDots.Length-1].transform.position.x;
+                originalPosition = transform.position.y;
             }
 
             if (transform.position.x < finalPosition)
             {
                 CalculateFlight();
             }
+            /*else if (transform.position.y > originalPosition)
+            {
+                CalculateFlight();
+            }*/
             else
             {
+                //GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+                //transform.position = new Vector2(finalPosition, transform.position.y);
                 started = false;
             }
         }
@@ -66,14 +76,16 @@ public class BallFlightCalculation : MonoBehaviour
 
     private void CalculateFlight()
     {
-        transform.position = new Vector2(transform.position.x+(Time.deltaTime*2f),transform.position.y);
+        var y = CalculateParabola(transform.position.x);
+        var x = transform.position.x + (Time.fixedDeltaTime * 10f);
+        transform.position = new Vector2(x, y);
     }
 
     private void ProjectTrajectory()
     {
         for (int i = 0; i < trajectoryDots.Length; i++)
         {
-            var y = CalculateParabola(i);
+            var y = CalculateParabola(parabolaWidth * ((i + 1) / 10f));
             trajectoryDots[i].transform.localPosition = new Vector2(parabolaWidth*((i+1)/10f), y);
         }
     }
@@ -83,6 +95,6 @@ public class BallFlightCalculation : MonoBehaviour
         var a = parabolaHeight / Mathf.Pow((parabolaWidth / 2), 2);
         var b = parabolaHeight;
         var c = parabolaWidth / 2;
-        return -(a * (Mathf.Pow((parabolaWidth * ((x + 1) / 10f) - c), 2))) + b;
+        return -(a * Mathf.Pow((x - c), 2)) + b;
     }
 }
