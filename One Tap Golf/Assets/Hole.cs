@@ -16,7 +16,8 @@ public class Hole : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         pointsCounter.IncrementScore();
-        StartCoroutine(gameManager.ResetGame());
+        GetComponent<Collider2D>().enabled = false;
+        StartCoroutine(gameManager.ResetLevel());
     }
 
 }

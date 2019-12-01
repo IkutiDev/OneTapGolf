@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Utils;
 
 public class PointsCounter : MonoBehaviour
 {
-    [SerializeField, ReadOnly] private int score;
+    private int score;
 
     public int GetScore()
     {

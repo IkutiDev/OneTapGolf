@@ -35,6 +35,16 @@ public class BallFlightCalculation : MonoBehaviour
             parabolaHeight += parabolaDistanceIncreaseIncrement/3;
             parabolaWidth += parabolaDistanceIncreaseIncrement;
             ProjectTrajectory();
+            if (trajectoryDots[trajectoryDots.Length - 1].transform.position.x >= 12.5f)
+            {
+                foreach (var dot in trajectoryDots)
+                {
+                    dot.SetActive(false);
+                }
+                flying = true;
+                finalPosition = trajectoryDots[trajectoryDots.Length - 1].transform.position.x;
+                Debug.Log("Went off the game border");
+            }
             if (started == false)
             {
                 started = true;
@@ -43,7 +53,7 @@ public class BallFlightCalculation : MonoBehaviour
                     dot.SetActive(true);
                 }
             }
-            Debug.Log(parabolaHeight+" "+parabolaWidth);
+           // Debug.Log(parabolaHeight+" "+parabolaWidth);
         }
         else if (started)
         {
@@ -51,7 +61,7 @@ public class BallFlightCalculation : MonoBehaviour
             {
                 if (!flying)
                 {
-
+                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
                     foreach (var dot in trajectoryDots)
                     {
                         dot.SetActive(false);
@@ -70,6 +80,11 @@ public class BallFlightCalculation : MonoBehaviour
                 {
                     fallen = true;
                 }
+            }
+            else
+            {
+                gameObject.GetComponent<Rigidbody2D>().velocity =
+                    gameObject.GetComponent<Rigidbody2D>().velocity * 0.9f;
             }
         }
     }
@@ -100,6 +115,9 @@ public class BallFlightCalculation : MonoBehaviour
 
     public void ResetBall()
     {
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        GetComponent<Rigidbody2D>().velocity=Vector2.zero;
+        transform.rotation=Quaternion.identity;
         transform.position = startPosition;
         flying = false;
         started = false;
@@ -109,4 +127,14 @@ public class BallFlightCalculation : MonoBehaviour
         parabolaWidth = 0.9f;
         parabolaDistanceIncreaseIncrement += 0.01f;
     }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        Debug.Log(GetComponent<Rigidbody2D>().velocity.magnitude);
+        if (fallen && GetComponent<Rigidbody2D>().velocity.sqrMagnitude<Mathf.Epsilon)
+        {
+            FindObjectOfType<GameManager>().LooseGame();
+        }
+    }
+
 }
