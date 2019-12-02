@@ -131,7 +131,7 @@ public class BallFlightCalculation : MonoBehaviour
     private void OnCollisionStay2D(Collision2D other)
     {
         Debug.Log(GetComponent<Rigidbody2D>().velocity.magnitude);
-        if (fallen && GetComponent<Rigidbody2D>().velocity.sqrMagnitude<Mathf.Epsilon)
+        if (fallen && GetComponent<Rigidbody2D>().velocity.sqrMagnitude<0.00001f)
         {
             FindObjectOfType<GameManager>().LooseGame();
         }
