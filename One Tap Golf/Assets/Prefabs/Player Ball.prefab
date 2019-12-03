@@ -813,9 +813,10 @@ GameObject:
   - component: {fileID: 8852216150401089814}
   - component: {fileID: 8852216150401089815}
   - component: {fileID: 970823262}
+  - component: {fileID: 1744238817}
   m_Layer: 0
   m_Name: Player Ball
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -881,7 +882,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d128f79f723d78846a3259a2e02d79ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -954,3 +955,15 @@ MonoBehaviour:
   - {fileID: 481249795}
   - {fileID: 41225995}
   - {fileID: 203124987}
+--- !u!114 &1744238817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852216150401089811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8c0d2b314138e4b9e6c3c8a9e9b2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

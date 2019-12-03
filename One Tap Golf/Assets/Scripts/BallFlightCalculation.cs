@@ -13,63 +13,63 @@ public class BallFlightCalculation : MonoBehaviour
 
     private float finalPosition;
 
-    private bool started;
+    private bool showDots;
 
     private bool flying;
 
     private bool fallen;
 
-    private Vector2 startPosition;
+    
+
+    private Rigidbody2D ballRigidbody2D;
 
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = transform.position;
+        ballRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    public bool isFallen()
+    {
+        return fallen;
+    }
+    public void ResetFlight()
+    {
+        flying = false;
+        showDots = false;
+        parabolaHeight = 0.3f;
+        parabolaWidth = 0.9f;
+        fallen = false;
+        parabolaDistanceIncreaseIncrement += 0.01f;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.A) && !flying)
+        if (Input.anyKey && !flying)
         {
             parabolaHeight += parabolaDistanceIncreaseIncrement/3;
             parabolaWidth += parabolaDistanceIncreaseIncrement;
             ProjectTrajectory();
             if (trajectoryDots[trajectoryDots.Length - 1].transform.position.x >= 12.5f)
             {
-                foreach (var dot in trajectoryDots)
-                {
-                    dot.SetActive(false);
-                }
-                flying = true;
-                finalPosition = trajectoryDots[trajectoryDots.Length - 1].transform.position.x;
-                Debug.Log("Went off the game border");
+                LaunchBall();
             }
-            if (started == false)
+            if (showDots == false)
             {
-                started = true;
+                showDots = true;
                 foreach (var dot in trajectoryDots)
                 {
                     dot.SetActive(true);
                 }
             }
-           // Debug.Log(parabolaHeight+" "+parabolaWidth);
         }
-        else if (started)
+        else if (showDots)
         {
             if (!fallen)
             {
                 if (!flying)
                 {
-                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-                    foreach (var dot in trajectoryDots)
-                    {
-                        dot.SetActive(false);
-                    }
-
-                    flying = true;
-
-                    finalPosition = trajectoryDots[trajectoryDots.Length - 1].transform.position.x;
+                    LaunchBall();
                 }
 
                 if (transform.position.x < finalPosition)
@@ -83,17 +83,31 @@ public class BallFlightCalculation : MonoBehaviour
             }
             else
             {
-                gameObject.GetComponent<Rigidbody2D>().velocity =
-                    gameObject.GetComponent<Rigidbody2D>().velocity * 0.9f;
+                ballRigidbody2D.velocity *= 0.9f;
             }
         }
     }
 
+    private void LaunchBall()
+    {
+        ballRigidbody2D.constraints = RigidbodyConstraints2D.None;
+        foreach (var dot in trajectoryDots)
+        {
+            dot.SetActive(false);
+        }
+
+        flying = true;
+
+        finalPosition = trajectoryDots[trajectoryDots.Length - 1].transform.position.x;
+    }
+
     private void CalculateFlight()
     {
-        var y = CalculateParabola(transform.position.x);
-        var x = transform.position.x + (Time.fixedDeltaTime * 10f);
-        transform.position = new Vector2(x, y);
+        var position = transform.position;
+        var y = CalculateParabola(position.x);
+        var x = position.x + (Time.fixedDeltaTime * 10f);
+        position = new Vector2(x, y);
+        transform.position = position;
     }
 
     private void ProjectTrajectory()
@@ -111,30 +125,6 @@ public class BallFlightCalculation : MonoBehaviour
         var b = parabolaHeight;
         var c = parabolaWidth / 2;
         return -(a * Mathf.Pow((x - c), 2)) + b;
-    }
-
-    public void ResetBall()
-    {
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        GetComponent<Rigidbody2D>().velocity=Vector2.zero;
-        transform.rotation=Quaternion.identity;
-        transform.position = startPosition;
-        flying = false;
-        started = false;
-        fallen = false;
-        gameObject.layer = 0;
-        parabolaHeight = 0.3f;
-        parabolaWidth = 0.9f;
-        parabolaDistanceIncreaseIncrement += 0.01f;
-    }
-
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        Debug.Log(GetComponent<Rigidbody2D>().velocity.magnitude);
-        if (fallen && GetComponent<Rigidbody2D>().velocity.sqrMagnitude<0.00001f)
-        {
-            FindObjectOfType<GameManager>().LooseGame();
-        }
     }
 
 }

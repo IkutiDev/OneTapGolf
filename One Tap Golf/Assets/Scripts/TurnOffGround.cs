@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TurnOffGround : MonoBehaviour
 {
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask layerMask=8;
 
     void OnTriggerEnter2D(Collider2D col)
     {

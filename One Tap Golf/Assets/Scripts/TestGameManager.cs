@@ -6,10 +6,14 @@ public class TestGameManager : MonoBehaviour
 {
     [SerializeField] private HoleMovement hole;
 
-    [SerializeField] private PointsCounter score;
+    [SerializeField] private Score score;
     // Start is called before the first frame update
     void Start()
     {
+        if (hole == null)
+        {
+            hole = FindObjectOfType<HoleMovement>();
+        }
         score.SetScore(0);
     }
 

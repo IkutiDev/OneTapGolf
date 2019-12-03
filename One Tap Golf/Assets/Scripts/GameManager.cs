@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float levelLoadDelay;
-    [SerializeField] private BallFlightCalculation ball;
+    [SerializeField] private float levelLoadDelay=1f;
+    [SerializeField] private Ball ball;
     [SerializeField] private HoleMovement hole;
     [SerializeField] private CanvasManager canvasManager;
     private bool wonLevel;
@@ -17,6 +17,24 @@ public class GameManager : MonoBehaviour
         if (!PlayerPrefs.HasKey("Score"))
         {
             PlayerPrefs.SetInt("Score",0);
+        }
+    }
+
+    private void Start()
+    {
+        if (canvasManager == null)
+        {
+            canvasManager = FindObjectOfType<CanvasManager>();
+        }
+
+        if (hole == null)
+        {
+            hole = FindObjectOfType<HoleMovement>();
+        }
+
+        if (ball == null)
+        {
+            ball = FindObjectOfType<Ball>();
         }
     }
 
@@ -32,11 +50,9 @@ public class GameManager : MonoBehaviour
 
     public void LooseGame()
     {
-        if (!wonLevel)
-        {
-            Time.timeScale = 0f;
-           canvasManager.EnableLooseGameCanvas();
-        }
+        if (wonLevel) return;
+        Time.timeScale = 0f;
+        canvasManager.EnableLooseGameCanvas();
     }
     public void ResetGame()
     {

@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
-    private PointsCounter pointsCounter;
+    private Score score;
     private GameManager gameManager;
     private void Start()
     {
-        pointsCounter = FindObjectOfType<PointsCounter>();
+        score = FindObjectOfType<Score>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        pointsCounter.IncrementScore();
         GetComponent<Collider2D>().enabled = false;
+        score.IncrementScore();
         StartCoroutine(gameManager.ResetLevel());
     }
 
