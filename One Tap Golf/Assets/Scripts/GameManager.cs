@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasManager canvasManager;
     private bool wonLevel;
 
-    private void Awake()
+    private  void Awake()
     {
         if (!PlayerPrefs.HasKey("Score"))
         {
@@ -50,17 +50,17 @@ public class GameManager : MonoBehaviour
 
     public void LooseGame()
     {
-        if (wonLevel) return;
+        if (wonLevel){ return;}
         Time.timeScale = 0f;
         canvasManager.EnableLooseGameCanvas();
     }
-    public void ResetGame()
+    public static void ResetGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void QuitGame()
+    public static void QuitGame()
     {
         Application.Quit();
     }

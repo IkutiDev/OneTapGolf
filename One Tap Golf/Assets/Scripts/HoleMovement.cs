@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class HoleMovement : MonoBehaviour
 {
-    [SerializeField] private float minimumRange=0f;
+    [SerializeField] private float minimumRange;
     [SerializeField] private float maximumRange=7.7f;
 
     private void Start()

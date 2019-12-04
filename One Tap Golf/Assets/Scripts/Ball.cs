@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     private BallFlightCalculation ballFlight;
     private Rigidbody2D ballRigidbody2D;
     private Vector2 startPosition;
+    [SerializeField] private float minimalVelocity;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class Ball : MonoBehaviour
     private void OnCollisionStay2D(Collision2D other)
     {
         Debug.Log(GetComponent<Rigidbody2D>().velocity.magnitude);
-        if (ballFlight.isFallen() &&GetComponent<Rigidbody2D>().velocity.sqrMagnitude < 0.00001f)
+        if (ballFlight.isFallen() &&GetComponent<Rigidbody2D>().velocity.sqrMagnitude < minimalVelocity)
         {
             FindObjectOfType<GameManager>().LooseGame();
         }
