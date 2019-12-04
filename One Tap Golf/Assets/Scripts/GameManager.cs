@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         canvasManager.EnableLooseGameCanvas();
     }
-    public static void ResetGame()
+    public void ResetGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public static void QuitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
