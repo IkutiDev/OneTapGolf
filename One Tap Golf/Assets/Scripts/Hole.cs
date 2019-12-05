@@ -17,6 +17,7 @@ public class Hole : MonoBehaviour
     {
         GetComponent<Collider2D>().enabled = false;
         score.IncrementScore();
+        AudioManager.instance.PlayHitSound();
         StartCoroutine(gameManager.ResetLevel());
     }
 

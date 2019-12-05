@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BallFlightCalculation : MonoBehaviour
 {
@@ -99,6 +100,7 @@ public class BallFlightCalculation : MonoBehaviour
         flying = true;
 
         finalPosition = trajectoryDots[trajectoryDots.Length - 1].transform.position.x;
+        AudioManager.instance.PlayShootSound();
     }
 
     private void CalculateFlight()

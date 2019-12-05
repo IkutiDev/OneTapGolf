@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Ball : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Ball : MonoBehaviour
     private Rigidbody2D ballRigidbody2D;
     private Vector2 startPosition;
     [SerializeField] private float minimalVelocity;
+
 
     private void Start()
     {
@@ -36,4 +38,5 @@ public class Ball : MonoBehaviour
             FindObjectOfType<GameManager>().LooseGame();
         }
     }
+
 }

@@ -10,6 +10,7 @@ public class TestGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.SetInt("Score",0);
         if (hole == null)
         {
             hole = FindObjectOfType<HoleMovement>();
